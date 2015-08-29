@@ -1,2 +1,3 @@
 # spoj-codechef-problems
-These are  my solved problems using C++
+This repo is for spoj and codechef problems with a primary aim of building a library of problems 
+   as time passes I shall push medium level problems of codechef and spoj problems
