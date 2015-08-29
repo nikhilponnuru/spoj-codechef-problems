@@ -1,0 +1,87 @@
+#include <iostream>
+#include <stdio.h>
+#include <vector>
+ 
+// Problem:	http://www.codechef.com/SEPT10/problems/FIRE/
+ 
+class Bush
+{
+public:
+	std::vector<short> neighbors;
+	bool bIsTraversed;
+	bool bFavorite;
+ 
+	Bush(bool isSaved = false)
+		:bIsTraversed(isSaved), 
+		bFavorite(false)
+	{}
+ 
+	inline void Reset()
+	{
+		bIsTraversed = false;
+		bFavorite = false;
+		neighbors.clear();
+	}
+};
+ 
+bool IsItOkToBurnYouDown(short bush, std::vector<Bush>& bushes)
+{
+	if(bushes[bush].bIsTraversed) return true;
+	bushes[bush].bIsTraversed = true;
+	if(bushes[bush].bFavorite)
+		return false;
+ 
+	int falseCount = 0;
+	for(size_t i = 0; i < bushes[bush].neighbors.size() && falseCount <= 1; i++)
+	{
+		short index = bushes[bush].neighbors[i];
+		if(bushes[index].bIsTraversed)
+			continue;
+		if( !IsItOkToBurnYouDown(index, bushes) )
+			falseCount++;
+	}
+ 
+	return falseCount <= 1;
+}
+ 
+void BrushFire()
+{
+	short T;
+	scanf("%hi", &T);
+ 
+	short n, s, t, c, temp;
+	std::vector<Bush> bushes;
+	while(T-- > 0)
+	{
+		scanf("%hi %hi %hi", &n, &s, &t);
+		bushes.resize(n + 1); // lets leave the 1st node empty for clarity sake
+		
+		for(short i = 1; i <= n; i++)
+		{
+			bushes[i].Reset();
+			scanf("%hi", &c);
+			bushes[i].neighbors.resize(c);
+			for(short j = 0; j < c; j++)
+			{
+				scanf("%hi", &bushes[i].neighbors[j]);
+			}
+		}
+ 
+		for(short i = 0; i < t; i++)
+		{
+			scanf("%hi", &temp);
+			bushes[temp].bFavorite = true;
+		}
+ 
+		if( IsItOkToBurnYouDown(s, bushes) )
+			printf("%s", "yes\n");
+		else
+			printf("%s", "no\n");
+	}
+}
+ 
+int main()
+{
+	BrushFire();
+	return 0;
+}  
