@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <vector>
  
-// Problem:	http://www.codechef.com/SEPT10/problems/FIRE/
+
  
 class Bush
 {
