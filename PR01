@@ -1,0 +1,111 @@
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <string.h>
+#include <algorithm>
+using namespace std;
+typedef int lld;
+ 
+const lld limit = 100000002;
+vector<lld> primes;
+bool pr[1000002];
+ 
+void Fill()
+{
+    memset(pr, 1, sizeof(pr));
+ 
+    pr[0] = pr[1] = false;
+ 
+    for (lld i=2; i<1000002; i++)
+    {
+        if (!pr[i]) continue;
+ 
+        primes.push_back(i);
+        for (lld j=2; i*j<1000002; j++)
+        {
+            pr[i*j] = false;
+        }
+    }
+}
+ 
+char memo[limit];
+bool IsPrime(lld num)
+{
+    if (num < limit)
+    {
+        if (memo[num] != 0)
+        {
+            return (memo[num] == 1);
+        }
+    }
+ 
+    for (lld i=0; primes[i]*primes[i]<=num; i++)
+    {
+        //cout<<primes[i]<<"\n";
+        if (num%primes[i] == 0)
+        {
+            if (num < limit)
+            {
+                memo[num] = 2;
+            }
+            return false;
+        }
+    }
+ 
+    if (num < limit)
+    {
+        memo[num] = 1;
+    }
+    return true;
+}
+ 
+void SolveFor(lld l, lld r)
+{
+    if (l < 6)
+    {
+        for (lld i=l; i<=min(6, r); i++)
+        {
+            if (IsPrime(i)) printf("%d\n", i);
+        }
+ 
+        l = 7;
+    }
+ 
+    bool add4;
+ 
+    if (l%6 == 0) l++;
+    else if (l%6 > 1) l+= (5-l%6);
+ 
+    add4 = (l%6 == 1);
+ 
+    for (lld i=l; i<=r;)
+    {
+        if (IsPrime(i)) printf("%d\n", i);
+ 
+        if (add4) i += 4;
+        else i+= 2;
+ 
+        add4 = !add4;
+    }
+}
+ 
+int main ()
+{
+    //freopen("otp.txt", "w", stdout);
+ 
+    lld tests;
+    Fill();
+    memo[1] = 2;
+    scanf("%d", &tests);
+    for (lld t=1; t<=tests; t++)
+    {
+        lld l, r;
+ 
+        scanf("%d %d", &l, &r);
+        SolveFor(l, r);
+ 
+        if (t != tests)
+            printf("\n");
+    }
+}
+ 
