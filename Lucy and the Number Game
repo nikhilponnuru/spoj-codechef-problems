@@ -1,0 +1,62 @@
+#include<iostream>
+#include<map>
+#include<string>
+using namespace std;
+int main()
+{
+    int t,i,n,q,c;
+    map<int, string>m1;
+    string s;
+    cin>>t;
+    while(t--)
+    {
+           c=0;
+        cin>>n;
+        for(i=0;i<n;i++)
+        {
+         cin>>s;
+         cin>>q;
+ 
+ 
+           if(m1[q]=="")
+            {
+ 
+ 
+                m1[q]=s;
+ 
+            }
+           else{
+ 
+            m1[q]="%";
+           }
+ 
+        }
+ 
+ 
+       for (map<int,string>::iterator it=m1.begin(); it!=m1.end(); )
+ 
+        {
+ 
+ 
+ 
+          if(it->second!="%")
+            {
+                cout<<it->second<<endl;
+                c=1;
+                break;
+            }
+            else
+                it++;
+        }
+        if(c!=1)
+            cout<<"Nobody wins"<<endl;
+            m1.clear();
+ 
+ 
+}
+ 
+ 
+ 
+ 
+    return 0;
+}
