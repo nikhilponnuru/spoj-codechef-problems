@@ -1,0 +1,54 @@
+#include <iostream>
+#include <string>
+ 
+#define REP(n) for(i = 0;i < n;i++)
+ 
+using namespace std;
+ 
+int main()
+{
+	int t,i,n1,n2,count;
+	string s1,s2;
+	cin >> t;
+	while(t--)
+	{
+		bool flag = true;
+		count = 0;
+		int c = 0;
+		int a[26] = {0},b[26] = {0};
+		cin >> s1 >> s2;
+		n1 = s1.length();
+		n2 = s2.length();
+		REP(n1)
+		{
+			a[s1[i]-'a']++;
+			//count++;
+		}
+		REP(n2)
+		{
+			b[s2[i]-'a']++;
+			//count--;
+		}
+		REP(26)
+		{
+			if(a[i] > 0)
+				c++;
+			if(b[i] > 0)
+				c--;
+			if(c != 0)
+				break;
+			if(a[i] != b[i])
+				flag = false;
+		}
+		if(c != 0)
+			cout << "YES\n";
+		else
+		{
+			if(flag)
+				cout << "YES\n";
+			else
+				cout << "NO\n";
+		}
+	}
+	return 0;
+}  
