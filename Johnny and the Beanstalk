@@ -1,0 +1,38 @@
+#include <cstdio>
+using namespace std;
+ 
+int main()
+{
+	int T;
+	scanf("%d", &T);
+	while(T--)
+	{
+		int K, B;
+		scanf("%d", &K);
+ 
+ 
+		int Branches=1;
+		bool err=false;
+ 
+		for(int i=0;i<K-1;i++)
+		{
+			scanf("%d", &B);
+			if(B>Branches)
+			{
+				err=true;
+				break;
+			}
+			else
+			{
+				Branches-=B;
+				Branches*=2;
+			}
+		}
+		scanf("%d", &B);
+		if(B!=Branches)err=true;
+ 
+		if(err)printf("No\n");
+		else printf("Yes\n");
+ 
+	}
+}
