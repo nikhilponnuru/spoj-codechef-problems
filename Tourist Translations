@@ -1,0 +1,59 @@
+#include<iostream>
+#include<map>
+using namespace std;
+int main()
+{
+    string s;
+    char c,d;
+    int n,i,k=0,temp;
+    map<char,char>m;
+    cin>>n;
+    cin>>s;
+    for(i=97;i<123;i++)
+    {
+        c=i;
+       m[c]=s[k];
+ 
+        k++;
+    }
+ 
+       int len;
+ 
+        while(n--)
+       {
+ 
+        cin>>s;
+        len=s.length();
+        for(i=0;i<len;i++)
+        {
+            if(s[i]!='_')
+            {
+                temp=s[i];
+                if(temp>96 && temp<123)
+                 cout<<m[s[i]];
+                else if(temp>64&&temp <91)
+                 {
+                     c=s[i]+32;
+                      d=m[c]-32;
+                     cout<<d;
+                 }
+                 else
+                    cout<<s[i];
+ 
+            }
+          else
+          {
+               cout<<' ';
+          }
+       }
+       cout<<endl;
+ 
+ 
+    }
+ 
+ 
+ 
+    return 0;
+ 
+}
+ 
