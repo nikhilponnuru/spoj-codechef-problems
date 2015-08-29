@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+ 
+main()
+{
+	int k,n;
+	ios::sync_with_stdio(0);
+	bool flag;
+	string A[50],B;
+	
+	cin>>k>>n;
+	for(int i=0;i<k;i++)
+	 cin>>A[i];
+	while(n--)
+	{
+		flag=0;
+		B="";
+		cin>>B;
+		if(B.length()>46)
+		{
+			cout<<"Good\n";
+			continue;
+		}
+		for(int i=0;i<k;i++)
+		{
+			if(B.find(A[i])!=string::npos)
+			{
+				flag=1;
+				cout<<"Good\n";
+				break;
+			}
+		}
+		if(!flag) 
+		 cout<<"Bad\n";
+	} 
+}  
