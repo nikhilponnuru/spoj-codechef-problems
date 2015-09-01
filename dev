@@ -1,0 +1,114 @@
+#include<bits/stdc++.h>
+#define NMAX 1000050
+#define INF  1000000001
+ 
+using namespace std;
+ 
+int N , M;
+pair<int,int> A[NMAX] ;
+int R[NMAX] , L[NMAX]  ;
+long long DP[NMAX] , P[NMAX];
+stack<int>s;
+ 
+inline int max(int a , int b){
+	return (a>b)?a:b;
+}
+inline void preprocess(){
+	for(int i = 1 ; i <= N ; i++){ L[i] = 1 , R[i] = N;}
+ 
+    for(int i = 1 ; i <= N ; i++){
+    	while(!s.empty() and A[s.top()].first <= A[i].first)
+    		s.pop(); 
+    	if(!s.empty())
+			L[i] = s.top()+1;
+		s.push(i);
+    }
+ 
+    while(!s.empty()) s.pop();
+ 
+ 
+	for(int i = N ; i >= 1 ; i--){
+		while(!s.empty() && A[s.top()].first < A[i].first)
+			s.pop();
+		if(!s.empty())
+			R[i] = s.top()-1;
+		s.push(i);
+	}
+ 
+	sort(A+1,A+1+N);
+ 
+	for(int j = 1; j <= N ; j++){
+		int i = A[j].second;
+		long long rig = R[i]-i+1;   
+		long long lef = i - L[i]+1; 
+		DP[j] = rig*lef; 
+	}
+ 
+ 
+	for(int i = 1 ; i <= N ; i++) P[i] = P[i-1] + DP[i];
+}
+ 
+int main(){
+	 
+	cin.tie(0);
+	ios::sync_with_stdio(false);
+ 
+	int maxm  = 0 , minm = INF;
+	cin >> N >> M;
+	
+	for(int i = 1 ; i <= N ; i++) { 
+		cin >> A[i].first;
+		A[i].second = i;
+		maxm = max(maxm , A[i].first);
+		minm = min(minm , A[i].first);
+	}
+ 
+	preprocess();
+ 
+	while( M-- ){
+		
+		char x ; int v ; char start;
+		
+		cin >> x >> v >> start;
+		char opp = start =='C'?'D':'C';
+ 
+		if( x == '>' ){
+ 
+	        // First occurence of value > v
+	        int idx = upper_bound(A+1,A+1+N,make_pair(v,INF) ) - A;
+	        long long val = P[N] - P[idx-1];
+			if( v >= maxm) cout << opp;
+			else if( val & 1) cout << start;
+			else cout << opp;
+		}
+ 
+		else if (x == '<' ){
+ 
+ 			// Last occurence of value < v
+ 			int idx = lower_bound(A+1,A+1+N,make_pair(v,0)) - A - 1;
+	        long long val = P[idx];		
+			if( v <= minm) cout << opp;
+			else if( val & 1) cout << start;
+			else cout << opp;
+		}
+ 
+		else {
+ 
+			bool ok = true;
+ 
+			// First occurence of v
+			int fi =  lower_bound(A+1,A+1+N,make_pair(v,0)) - A;
+ 
+			// Last occurence of v
+ 	 		int la =  lower_bound(A+1,A+1+N,make_pair(v+1,0)) - A - 1;
+ 
+ 	 		if( fi == N + 1 or A[fi].first != v ) ok = false;
+			
+			long long val = P[la] - P[fi-1];
+			
+			if(!ok) cout << opp;
+			else if( val & 1) cout << start;
+			else cout << opp;
+		}
+	}
+} 
