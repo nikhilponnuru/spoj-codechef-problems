@@ -49,7 +49,7 @@ main()
 		 alpha[S[i]]++;
 		
 		ans =1; 
-		for(auto i=alpha.begin();i!=alpha.end();i++)
+		for(int i=alpha.begin();i!=alpha.end();i++)
 		 ans = ans*ifact[i->second] %mod;
 		 
 		ans = ans*fact[n] %mod;
