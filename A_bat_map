@@ -6,11 +6,7 @@
  
 using namespace std;
  
-template<class T>
-struct point{
-T x,y;
-point operator-(const point &a)const{ return (point){x-a.x,y-a.y}; }
-};
+
  
 template<class T>
 T cross(const point<T> &a,const point<T> &b){ return a.x*b.y-a.y*b.x; }
@@ -28,15 +24,20 @@ template<class T>
 T dist2(const point<T> &a,const point<T> &b){
 return (a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y);
 }
- 
+ template<class T>
+struct point{
+T x,y;
+point operator-(const point &a)const{ return (point){x-a.x,y-a.y}; }
+};
+
 int main(){
 int T; scanf("%d",&T);
 while(T--){
-int n; scanf("%d",&n);
+ scanf("%d",&n);
 point<int> p[5000];
 rep(i,n) scanf("%d%d",&p[i].x,&p[i].y);
  
-int ans2=0;
+int ans2=0,n;
 if(n==4){
 rep(i,n) rep(j,i) {
 int k,l;
